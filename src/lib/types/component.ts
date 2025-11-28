@@ -11,6 +11,9 @@ export interface ComponentPreview {
     | 'data-display'
     | 'feedback'
     | 'modals'
+    | 'marketing'
+    | 'media'
+    | 'auth'
     | 'misc';
     tags: string[];
 
@@ -26,6 +29,7 @@ export interface ComponentPreview {
         previewHeight?: number;
         previewWidth?: number;
         responsive?: boolean;
+        previewOnClick?: boolean; // Show click to preview placeholder instead of rendering
     };
 
     // Docs
