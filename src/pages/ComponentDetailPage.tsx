@@ -114,7 +114,7 @@ export const ComponentDetailPage: React.FC = () => {
                         <div>
                             <h2 className="text-2xl font-bold mb-4 uppercase">Component Code</h2>
                             <div className="border-3 border-neo-black max-h-[600px] overflow-y-auto">
-                                <CodeViewer code={component.codeRaw} language="typescript" showLineNumbers={true} />
+                                <CodeViewer code={component.codeRaw} showLineNumbers={true} />
                             </div>
                         </div>
                     )}
@@ -141,13 +141,13 @@ export const ComponentDetailPage: React.FC = () => {
                                 <p className="text-neo-gray-700 mb-3">Here's a simple example:</p>
                                 {component.documentation?.usage ? (
                                     <div className="bg-neo-gray-50 border-2 border-neo-gray-300">
-                                        <CodeViewer code={component.documentation.usage} language="typescript" />
+                                        <CodeViewer code={component.documentation.usage} />
                                     </div>
                                 ) : (
                                     <div className="bg-neo-gray-50 border-2 border-neo-gray-300">
                                         <CodeViewer
                                             code={`import { ${component.title.replace(/\s+/g, '')} } from './${component.id}';\n\nfunction MyPage() {\n  return (\n    <div>\n      <${component.title.replace(/\s+/g, '')} />\n    </div>\n  );\n}`}
-                                            language="typescript"
+
                                         />
                                     </div>
                                 )}

@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { useUIStore } from '@/lib/store/uiStore';
-import type { ComponentPreview } from '@/lib/types/component';
+
 import { COMPONENTS } from '@/lib/constants/components';
 
 export const useComponentSearch = () => {
