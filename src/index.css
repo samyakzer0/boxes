@@ -1,0 +1,71 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Theme Variables */
+@layer base {
+  :root {
+    /* Light theme colors */
+    --color-bg: #ffffff;
+    --color-text: #000000;
+    --color-border: #000000;
+    --color-gray-50: #f9fafb;
+    --color-gray-100: #f3f4f6;
+    --color-gray-200: #e5e7eb;
+    --color-gray-300: #d1d5db;
+    --color-gray-400: #9ca3af;
+    --color-gray-500: #6b7280;
+    --color-gray-600: #4b5563;
+    --color-gray-700: #374151;
+    --color-gray-800: #1f2937;
+    --color-gray-900: #111827;
+  }
+}
+
+/* Base Styles */
+body {
+  margin: 0;
+  font-family: 'Space Grotesk', 'Inter', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+code {
+  font-family: 'Space Mono', 'Courier New', monospace;
+}
+
+/* Neo-Brutalist Component Utilities */
+@layer components {
+  .btn-neo-primary {
+    @apply px-6 py-3 bg-neo-black text-neo-white font-bold uppercase tracking-wider border-3 border-neo-black shadow-neo hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-neo-sm active:translate-x-[4px] active:translate-y-[4px] active:shadow-none disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-150;
+  }
+
+  .btn-neo-secondary {
+    @apply px-6 py-3 bg-neo-white text-neo-black font-bold uppercase tracking-wider border-3 border-neo-black shadow-neo hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-neo-sm active:translate-x-[4px] active:translate-y-[4px] active:shadow-none disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-150;
+  }
+
+  .btn-neo-ghost {
+    @apply px-6 py-3 bg-transparent text-neo-black font-bold uppercase tracking-wider border-3 border-neo-black hover:bg-neo-gray-50 active:bg-neo-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-150;
+  }
+
+  .card-neo {
+    @apply border-4 border-neo-black bg-neo-white shadow-neo hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-neo-md transition-all duration-150;
+  }
+
+  .input-neo {
+    @apply px-4 py-3 border-3 border-neo-black bg-neo-white text-neo-black focus:outline-none focus:ring-0 focus:border-neo-black focus:shadow-neo disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-150;
+  }
+
+  .badge-neo {
+    @apply px-3 py-1 text-xs font-bold uppercase tracking-wider border-2 border-neo-black bg-neo-gray-100 inline-block;
+  }
+
+  .container-neo {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+}
