@@ -6,12 +6,13 @@ import { ClipboardCopy } from '@/components/library/ClipboardCopy';
 import { DownloadButton } from '@/components/library/DownloadButton';
 import { PropsTable } from '@/components/library/PropsTable';
 import { Badge } from '@/components/ui/Badge';
-import { ChevronRight, Eye, Code2, BookOpen } from 'lucide-react';
+import { ChevronRight, Eye, Code2, BookOpen, RotateCw } from 'lucide-react';
 
 export const ComponentDetailPage: React.FC = () => {
     const { id } = useParams<{ id: string }>();
     const component = COMPONENTS.find((c) => c.id === id);
     const [activeTab, setActiveTab] = useState<'preview' | 'code' | 'usage'>('preview');
+    const [refreshKey, setRefreshKey] = useState(0);
 
     if (!component) {
         return (
@@ -99,15 +100,25 @@ export const ComponentDetailPage: React.FC = () => {
                     {/* Preview Tab */}
                     {activeTab === 'preview' && (
                         <div>
-                            <h2 className="text-2xl font-bold mb-4 uppercase">Live Preview</h2>
+                            <div className="flex items-center justify-between mb-4">
+                                <h2 className="text-2xl font-bold uppercase">Live Preview</h2>
+                                <button
+                                    onClick={() => setRefreshKey(prev => prev + 1)}
+                                    className="flex items-center gap-2 px-4 py-2 border-3 border-neo-black bg-neo-white font-bold uppercase text-sm shadow-neo hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-neo-sm transition-all"
+                                    title="Refresh animation"
+                                >
+                                    <RotateCw className="w-4 h-4" />
+                                    Refresh
+                                </button>
+                            </div>
                             <div
                                 className="border-4 border-neo-black bg-neo-gray-50 p-12 flex items-center justify-center"
                                 style={{ minHeight: component.preview.previewHeight || 300 }}
                             >
                                 {typeof PreviewComponent === 'function' && !component.preview.defaultProps ? (
-                                    <PreviewComponent />
+                                    <PreviewComponent key={refreshKey} />
                                 ) : (
-                                    <PreviewComponent {...(component.preview.defaultProps || {})} />
+                                    <PreviewComponent key={refreshKey} {...(component.preview.defaultProps || {})} />
                                 )}
                             </div>
                         </div>
