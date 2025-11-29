@@ -66,37 +66,37 @@ const reviews = [
         name: 'Jack',
         username: '@jack',
         body: "I've never seen anything like this before. It's amazing. I love it.",
-        img: 'https://avatar.vercel.sh/jack',
+        img: '/avatars/jack.png', // Use local assets
     },
     {
         name: 'Jill',
         username: '@jill',
         body: "I don't know what to say. I'm speechless. This is amazing.",
-        img: 'https://avatar.vercel.sh/jill',
+        img: '/avatars/jill.png',
     },
     {
         name: 'John',
         username: '@john',
         body: "I'm at a loss for words. This is amazing. I love it.",
-        img: 'https://avatar.vercel.sh/john',
+        img: '/avatars/john.png',
     },
     {
         name: 'Jane',
         username: '@jane',
         body: "I'm at a loss for words. This is amazing. I love it.",
-        img: 'https://avatar.vercel.sh/jane',
+        img: '/avatars/jane.png',
     },
     {
         name: 'Jenny',
         username: '@jenny',
         body: "I'm at a loss for words. This is amazing. I love it.",
-        img: 'https://avatar.vercel.sh/jenny',
+        img: '/avatars/jenny.png',
     },
     {
         name: 'James',
         username: '@james',
         body: "I'm at a loss for words. This is amazing. I love it.",
-        img: 'https://avatar.vercel.sh/james',
+        img: '/avatars/james.png',
     },
 ];
 

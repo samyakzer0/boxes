@@ -4393,18 +4393,176 @@ export const SidebarNavigation: React.FC<SidebarNavigationProps> = ({ items }) =
     category: 'feedback',
     tags: ['animation', 'confetti', 'celebration', 'interactive', 'canvas'],
 
-    code: `export const Confetti = () => {
-  const confettiRef = useRef(null);
-  
+    code: `import React, { useRef } from 'react';
+
+export interface ConfettiRef {
+  fire: (options?: any) => void;
+}
+
+export const Confetti = React.forwardRef<ConfettiRef, {}>(
+  (props, ref) => {
+    const canvasRef = useRef<HTMLCanvasElement>(null);
+
+    React.useImperativeHandle(ref, () => ({
+      fire: () => {
+        const canvas = canvasRef.current;
+        const ctx = canvas?.getContext('2d');
+        if (!ctx || !canvas) return;
+
+        canvas.width = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight;
+        const particles: any[] = [];
+
+        for (let i = 0; i < 100; i++) {
+          particles.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height - canvas.height,
+            size: Math.random() * 8 + 4,
+            speedY: Math.random() * 3 + 2,
+            speedX: Math.random() * 4 - 2,
+            color: ['#000000', '#FF6B6B', '#4ECDC4', '#FFE66D'][Math.floor(Math.random() * 4)],
+          });
+        }
+
+        function animate() {
+          if (!ctx || !canvas) return;
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          particles.forEach((p, i) => {
+            p.y += p.speedY;
+            p.x += p.speedX;
+            ctx.fillStyle = p.color;
+            ctx.fillRect(p.x, p.y, p.size, p.size);
+            ctx.strokeStyle = '#000000';
+            ctx.lineWidth = 2;
+            ctx.strokeRect(p.x, p.y, p.size, p.size);
+            if (p.y > canvas.height) particles.splice(i, 1);
+          });
+          if (particles.length > 0) requestAnimationFrame(animate);
+        }
+        animate();
+      },
+    }));
+
+    return <canvas ref={canvasRef} className="absolute inset-0 size-full" />;
+  }
+);
+
+// Usage
+export const ConfettiDemo = () => {
+  const confettiRef = useRef<ConfettiRef>(null);
   return (
-    <Confetti
-      ref={confettiRef}
-      onMouseEnter={() => confettiRef.current?.fire({})}
-    />
+    <div className="relative h-[400px] border-4 border-neo-black">
+      <Confetti ref={confettiRef} />
+      <button 
+        onClick={() => confettiRef.current?.fire({})}
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+      >
+        Fire Confetti!
+      </button>
+    </div>
   );
 };`,
 
-    codeRaw: `// See full implementation in Confetti.tsx`,
+    codeRaw: `import React, { useRef } from 'react';
+
+export interface ConfettiRef {
+    fire: (options?: any) => void;
+}
+
+export interface ConfettiProps {
+    className?: string;
+    onMouseEnter?: () => void;
+}
+
+export const Confetti = React.forwardRef<ConfettiRef, ConfettiProps>(
+    ({ className = '', onMouseEnter }, ref) => {
+        const canvasRef = useRef<HTMLCanvasElement>(null);
+
+        React.useImperativeHandle(ref, () => ({
+            fire: () => {
+                if (!canvasRef.current) return;
+                
+                const canvas = canvasRef.current;
+                const ctx = canvas.getContext('2d');
+                if (!ctx) return;
+
+                canvas.width = canvas.offsetWidth;
+                canvas.height = canvas.offsetHeight;
+
+                const particles: any[] = [];
+                const particleCount = 100;
+
+                for (let i = 0; i < particleCount; i++) {
+                    particles.push({
+                        x: Math.random() * canvas.width,
+                        y: Math.random() * canvas.height - canvas.height,
+                        size: Math.random() * 8 + 4,
+                        speedY: Math.random() * 3 + 2,
+                        speedX: Math.random() * 4 - 2,
+                        color: ['#000000', '#FF6B6B', '#4ECDC4', '#FFE66D', '#A8E6CF'][Math.floor(Math.random() * 5)],
+                    });
+                }
+
+                function animate() {
+                    if (!ctx || !canvas) return;
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                    particles.forEach((particle, index) => {
+                        particle.y += particle.speedY;
+                        particle.x += particle.speedX;
+
+                        ctx.fillStyle = particle.color;
+                        ctx.fillRect(particle.x, particle.y, particle.size, particle.size);
+                        ctx.strokeStyle = '#000000';
+                        ctx.lineWidth = 2;
+                        ctx.strokeRect(particle.x, particle.y, particle.size, particle.size);
+
+                        if (particle.y > canvas.height) {
+                            particles.splice(index, 1);
+                        }
+                    });
+
+                    if (particles.length > 0) {
+                        requestAnimationFrame(animate);
+                    }
+                }
+
+                animate();
+            },
+        }));
+
+        return (
+            <canvas
+                ref={canvasRef}
+                className={className}
+                onMouseEnter={onMouseEnter}
+                style={{ pointerEvents: onMouseEnter ? 'auto' : 'none' }}
+            />
+        );
+    }
+);
+
+Confetti.displayName = 'Confetti';
+
+export const ConfettiDemo: React.FC = () => {
+    const confettiRef = useRef<ConfettiRef>(null);
+
+    return (
+        <div className="relative flex h-[400px] w-full flex-col items-center justify-center overflow-hidden border-4 border-neo-black bg-neo-white">
+            <span className="pointer-events-none bg-gradient-to-b from-neo-black to-neo-gray-400 bg-clip-text text-center text-6xl font-bold uppercase leading-none text-transparent">
+                Confetti
+            </span>
+
+            <Confetti
+                ref={confettiRef}
+                className="absolute left-0 top-0 z-0 size-full"
+                onMouseEnter={() => {
+                    confettiRef.current?.fire({});
+                }}
+            />
+        </div>
+    );
+};`,
 
     dependencies: ['react'],
 
@@ -4428,15 +4586,79 @@ export const SidebarNavigation: React.FC<SidebarNavigationProps> = ({ items }) =
     category: 'data-display',
     tags: ['marquee', 'scroll', 'animation', 'testimonials', 'reviews'],
 
-    code: `export const Marquee = ({ children, pauseOnHover, reverse }) => (
-  <div className="flex overflow-hidden">
-    <div className="flex animate-marquee">
-      {children}
-    </div>
-  </div>
-);`,
+    code: `import React from 'react';
 
-    codeRaw: `// See full implementation in Marquee.tsx`,
+export const Marquee = ({ children, pauseOnHover = false, reverse = false }) => {
+  return (
+    <div className="flex overflow-hidden">
+      <div className={
+        \`flex min-w-full shrink-0 animate-marquee gap-4 \${
+          pauseOnHover ? 'hover:[animation-play-state:paused]' : ''
+        } \${reverse ? 'animate-marquee-reverse' : ''}
+        \`}>
+        {children}
+      </div>
+      <div className={
+        \`flex min-w-full shrink-0 animate-marquee gap-4 \${
+          pauseOnHover ? 'hover:[animation-play-state:paused]' : ''
+        } \${reverse ? 'animate-marquee-reverse' : ''}
+        \`} aria-hidden="true">
+        {children}
+      </div>
+    </div>
+  );
+};
+
+// Add to index.css:
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(calc(-100% - 1rem)); }
+}
+@keyframes marquee-reverse {
+  from { transform: translateX(calc(-100% - 1rem)); }
+  to { transform: translateX(0); }
+}`,
+
+    codeRaw: `import React from 'react';
+
+export interface MarqueeProps {
+    children: React.ReactNode;
+    pauseOnHover?: boolean;
+    reverse?: boolean;
+    className?: string;
+}
+
+export const Marquee: React.FC<MarqueeProps> = ({
+    children,
+    pauseOnHover = false,
+    reverse = false,
+    className = '',
+}) => {
+    return (
+        <div
+            className={\`flex overflow-hidden \${className}\`}
+            style={{
+                maskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)',
+            }}
+        >
+            <div
+                className={\`flex min-w-full shrink-0 animate-marquee items-center justify-around gap-4 \${
+                    pauseOnHover ? 'hover:[animation-play-state:paused]' : ''
+                } \${reverse ? 'animate-marquee-reverse' : ''}\`}
+            >
+                {children}
+            </div>
+            <div
+                className={\`flex min-w-full shrink-0 animate-marquee items-center justify-around gap-4 \${
+                    pauseOnHover ? 'hover:[animation-play-state:paused]' : ''
+                } \${reverse ? 'animate-marquee-reverse' : ''}\`}
+                aria-hidden="true"
+            >
+                {children}
+            </div>
+        </div>
+    );
+};`,
 
     dependencies: ['react'],
 
@@ -4460,13 +4682,64 @@ export const SidebarNavigation: React.FC<SidebarNavigationProps> = ({ items }) =
     category: 'navigation',
     tags: ['dock', 'navigation', 'icons', 'menu', 'social'],
 
-    code: `export const Dock = ({ children }) => (
+    code: `import React from 'react';
+import { Home, Mail, Calendar } from 'lucide-react';
+
+export const Dock = ({ children }) => (
   <div className="flex items-center gap-2 border-4 border-neo-black bg-neo-white p-3 shadow-neo">
     {children}
   </div>
+);
+
+export const DockIcon = ({ children }) => <div>{children}</div>;
+
+// Usage
+const navItems = [
+  { href: '#', icon: Home, label: 'Home' },
+  { href: '#', icon: Calendar, label: 'Calendar' },
+  { href: '#', icon: Mail, label: 'Email' },
+];
+
+export const DockDemo = () => (
+  <Dock>
+    {navItems.map((item) => (
+      <DockIcon key={item.label}>
+        <a
+          href={item.href}
+          className="flex h-12 w-12 items-center justify-center border-2 border-neo-black bg-neo-white hover:bg-neo-gray-100"
+          title={item.label}
+        >
+          <item.icon className="h-5 w-5" />
+        </a>
+      </DockIcon>
+    ))}
+  </Dock>
 );`,
 
-    codeRaw: `// See full implementation in Dock.tsx`,
+    codeRaw: `import React from 'react';
+import { Home, Mail, Calendar, PencilIcon } from 'lucide-react';
+
+export interface DockProps {
+    children: React.ReactNode;
+    direction?: 'top' | 'middle' | 'bottom';
+    className?: string;
+}
+
+export const Dock: React.FC<DockProps> = ({ children, className = '' }) => {
+    return (
+        <div className={\`flex items-center gap-2 border-4 border-neo-black bg-neo-white p-3 shadow-neo \${className}\`}>
+            {children}
+        </div>
+    );
+};
+
+export interface DockIconProps {
+    children: React.ReactNode;
+}
+
+export const DockIcon: React.FC<DockIconProps> = ({ children }) => {
+    return <div>{children}</div>;
+};`,
 
     dependencies: ['react', 'lucide-react'],
 
@@ -4490,17 +4763,142 @@ export const SidebarNavigation: React.FC<SidebarNavigationProps> = ({ items }) =
     category: 'media',
     tags: ['image', 'animation', 'pixel', 'reveal', 'effect'],
 
-    code: `export const PixelImage = ({ src, grid = "6x4" }) => {
+    code: `import React, { useEffect, useState } from 'react';
+
+const GRIDS = {
+  '6x4': { rows: 4, cols: 6 },
+  '8x8': { rows: 8, cols: 8 },
+};
+
+export const PixelImage = ({ src, grid = '6x4' }) => {
   const [isVisible, setIsVisible] = useState(false);
-  
+  const [showColor, setShowColor] = useState(false);
+  const { rows, cols } = GRIDS[grid];
+
+  useEffect(() => {
+    setIsVisible(true);
+    setTimeout(() => setShowColor(true), 1300);
+  }, []);
+
+  const pieces = Array.from({ length: rows * cols }, (_, i) => {
+    const row = Math.floor(i / cols);
+    const col = i % cols;
+    const clipPath = \`polygon(
+      \${col * (100 / cols)}% \${row * (100 / rows)}%,
+      \${(col + 1) * (100 / cols)}% \${row * (100 / rows)}%,
+      \${(col + 1) * (100 / cols)}% \${(row + 1) * (100 / rows)}%,
+      \${col * (100 / cols)}% \${(row + 1) * (100 / rows)}%
+    )\`;
+    return { clipPath, delay: Math.random() * 1200 };
+  });
+
   return (
     <div className="relative h-72 w-72 border-4 border-neo-black">
-      {/* Pixel pieces render here */}
+      {pieces.map((piece, i) => (
+        <div
+          key={i}
+          className={\`absolute inset-0 transition-all \${isVisible ? 'opacity-100' : 'opacity-0'}\`}
+          style={{ clipPath: piece.clipPath, transitionDelay: \`\${piece.delay}ms\` }}
+        >
+          <img
+            src={src}
+            className={showColor ? 'grayscale-0' : 'grayscale'}
+            style={{ transition: 'filter 1000ms' }}
+          />
+        </div>
+      ))}
     </div>
   );
 };`,
 
-    codeRaw: `// See full implementation in PixelImage.tsx`,
+    codeRaw: `import React, { useEffect, useMemo, useState } from 'react';
+
+type Grid = {
+    rows: number;
+    cols: number;
+};
+
+const DEFAULT_GRIDS: Record<string, Grid> = {
+    '6x4': { rows: 4, cols: 6 },
+    '8x8': { rows: 8, cols: 8 },
+    '8x3': { rows: 3, cols: 8 },
+    '4x6': { rows: 6, cols: 4 },
+    '3x8': { rows: 8, cols: 3 },
+};
+
+type PredefinedGridKey = keyof typeof DEFAULT_GRIDS;
+
+interface PixelImageProps {
+    src: string;
+    grid?: PredefinedGridKey;
+    customGrid?: Grid;
+    grayscaleAnimation?: boolean;
+    pixelFadeInDuration?: number;
+    maxAnimationDelay?: number;
+    colorRevealDelay?: number;
+}
+
+export const PixelImage: React.FC<PixelImageProps> = ({
+    src,
+    grid = '6x4',
+    grayscaleAnimation = true,
+    pixelFadeInDuration = 1000,
+    maxAnimationDelay = 1200,
+    colorRevealDelay = 1300,
+    customGrid,
+}) => {
+    const [isVisible, setIsVisible] = useState(false);
+    const [showColor, setShowColor] = useState(false);
+
+    const { rows, cols } = useMemo(() => {
+        return customGrid || DEFAULT_GRIDS[grid];
+    }, [customGrid, grid]);
+
+    useEffect(() => {
+        setIsVisible(true);
+        const colorTimeout = setTimeout(() => setShowColor(true), colorRevealDelay);
+        return () => clearTimeout(colorTimeout);
+    }, [colorRevealDelay]);
+
+    const pieces = useMemo(() => {
+        const total = rows * cols;
+        return Array.from({ length: total }, (_, index) => {
+            const row = Math.floor(index / cols);
+            const col = index % cols;
+            const clipPath = \`polygon(
+                \${col * (100 / cols)}% \${row * (100 / rows)}%,
+                \${(col + 1) * (100 / cols)}% \${row * (100 / rows)}%,
+                \${(col + 1) * (100 / cols)}% \${(row + 1) * (100 / rows)}%,
+                \${col * (100 / cols)}% \${(row + 1) * (100 / rows)}%
+            )\`;
+            return { clipPath, delay: Math.random() * maxAnimationDelay };
+        });
+    }, [rows, cols, maxAnimationDelay]);
+
+    return (
+        <div className="relative h-72 w-72 border-4 border-neo-black shadow-neo">
+            {pieces.map((piece, index) => (
+                <div
+                    key={index}
+                    className={\`absolute inset-0 transition-all \${isVisible ? 'opacity-100' : 'opacity-0'}\`}
+                    style={{
+                        clipPath: piece.clipPath,
+                        transitionDelay: \`\${piece.delay}ms\`,
+                        transitionDuration: \`\${pixelFadeInDuration}ms\`,
+                    }}
+                >
+                    <img
+                        src={src}
+                        className={grayscaleAnimation && (showColor ? 'grayscale-0' : 'grayscale')}
+                        style={{
+                            transition: grayscaleAnimation ? \`filter \${pixelFadeInDuration}ms\` : 'none',
+                        }}
+                    />
+                </div>
+            ))}
+        </div>
+    );
+};`,
 
     dependencies: ['react'],
 
@@ -4524,20 +4922,60 @@ export const SidebarNavigation: React.FC<SidebarNavigationProps> = ({ items }) =
     category: 'buttons',
     tags: ['button', 'interactive', 'hover', 'animation', 'transition'],
 
-    code: `export const InteractiveHoverButton = ({ children }) => (
-  <button className="group relative overflow-hidden border-3 border-neo-black 
-                     bg-neo-white px-6 py-2 font-bold uppercase shadow-neo">
-    <span className="group-hover:translate-x-12 group-hover:opacity-0">
-      {children}
-    </span>
-    <div className="absolute opacity-0 group-hover:opacity-100">
-      <span>{children}</span>
-      <ArrowRight />
-    </div>
-  </button>
-);`,
+    code: `import React from 'react';
+import { ArrowRight } from 'lucide-react';
 
-    codeRaw: `// See full implementation in InteractiveHoverButton.tsx`,
+export const InteractiveHoverButton = ({ children, ...props }) => {
+  return (
+    <button
+      className="group relative w-auto overflow-hidden border-3 border-neo-black bg-neo-white p-2 px-6 font-bold uppercase shadow-neo hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-neo-sm transition-all"
+      {...props}
+    >
+      <div className="flex items-center gap-2">
+        <div className="h-3 w-3 border-2 border-neo-black bg-neo-black transition-all duration-500 group-hover:scale-[50]"></div>
+        <span className="inline-block transition-all duration-300 group-hover:translate-x-12 group-hover:opacity-0">
+          {children}
+        </span>
+      </div>
+      <div className="absolute left-0 top-0 z-10 flex h-full w-full translate-x-12 items-center justify-center gap-2 text-neo-white opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">
+        <span className="font-bold uppercase">{children}</span>
+        <ArrowRight className="w-5 h-5" />
+      </div>
+    </button>
+  );
+};`,
+
+    codeRaw: `import React from 'react';
+import { ArrowRight } from 'lucide-react';
+
+export interface InteractiveHoverButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+    children: React.ReactNode;
+    className?: string;
+}
+
+export const InteractiveHoverButton: React.FC<InteractiveHoverButtonProps> = ({
+    children,
+    className = '',
+    ...props
+}) => {
+    return (
+        <button
+            className={\`group relative w-auto cursor-pointer overflow-hidden border-3 border-neo-black bg-neo-white p-2 px-6 text-center font-bold uppercase shadow-neo hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-neo-sm transition-all \${className}\`}
+            {...props}
+        >
+            <div className="flex items-center gap-2">
+                <div className="h-3 w-3 border-2 border-neo-black bg-neo-black transition-all duration-500 group-hover:scale-[50]"></div>
+                <span className="inline-block transition-all duration-300 group-hover:translate-x-12 group-hover:opacity-0">
+                    {children}
+                </span>
+            </div>
+            <div className="absolute left-0 top-0 z-10 flex h-full w-full translate-x-12 items-center justify-center gap-2 text-neo-white opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">
+                <span className="font-bold uppercase">{children}</span>
+                <ArrowRight className="w-5 h-5" />
+            </div>
+        </button>
+    );
+};`,
 
     dependencies: ['react', 'lucide-react'],
 
