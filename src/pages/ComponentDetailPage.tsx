@@ -121,6 +121,15 @@ export const ComponentDetailPage: React.FC = () => {
                                     <PreviewComponent key={refreshKey} {...(component.preview.defaultProps || {})} />
                                 )}
                             </div>
+
+                            {/* Props & Variations */}
+                            {component.documentation?.props && component.documentation.props.length > 0 && (
+                                <div className="mt-8 border-4 border-neo-black bg-neo-white p-6">
+                                    <h3 className="text-xl font-bold mb-4 uppercase">Props & Customization</h3>
+                                    <p className="text-neo-gray-700 mb-4">Customize this component using these props:</p>
+                                    <PropsTable props={component.documentation.props} />
+                                </div>
+                            )}
                         </div>
                     )}
 

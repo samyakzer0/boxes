@@ -309,6 +309,46 @@ export const GhostButton: React.FC<GhostButtonProps> = ({
     filename: 'GhostButton.tsx',
     folder: 'buttons',
 
+    documentation: {
+      usage: `import { GhostButton } from './buttons/GhostButton';
+
+export function App() {
+  return (
+    <GhostButton onClick={() => alert('Clicked!')}>
+      Learn More
+    </GhostButton>
+  );
+}`,
+      props: [
+        {
+          name: 'children',
+          type: 'React.ReactNode',
+          description: 'Button text or content',
+          required: true,
+        },
+        {
+          name: 'onClick',
+          type: '() => void',
+          description: 'Click event handler',
+          required: false,
+        },
+        {
+          name: 'disabled',
+          type: 'boolean',
+          description: 'Disable the button',
+          default: 'false',
+          required: false,
+        },
+        {
+          name: 'className',
+          type: 'string',
+          description: 'Additional CSS classes to apply',
+          default: '""',
+          required: false,
+        },
+      ],
+    },
+
     createdAt: new Date('2025-01-01'),
     updatedAt: new Date('2025-01-01'),
   },
@@ -384,6 +424,44 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
 
     filename: 'ThemeToggle.tsx',
     folder: 'utilities',
+
+    documentation: {
+      usage: `import { ThemeToggle } from './utilities/ThemeToggle';
+
+export function App() {
+  return (
+    <ThemeToggle 
+      initialDark={false}
+      onToggle={(isDark) => {
+        document.body.classList.toggle('dark', isDark);
+      }}
+    />
+  );
+}`,
+      props: [
+        {
+          name: 'onToggle',
+          type: '(isDark: boolean) => void',
+          description: 'Callback when theme changes, receives isDark state',
+          required: false,
+        },
+        {
+          name: 'initialDark',
+          type: 'boolean',
+          description: 'Initial theme state (dark mode enabled)',
+          default: 'false',
+          required: false,
+        },
+        {
+          name: 'className',
+          type: 'string',
+          description: 'Additional CSS classes',
+          default: '""',
+          required: false,
+        },
+      ],
+      notes: 'Displays Sun icon for dark mode and Moon icon for light mode. State managed internally with optional callback.',
+    },
 
     createdAt: new Date('2025-01-02'),
     updatedAt: new Date('2025-01-02'),
@@ -480,6 +558,68 @@ export const TextInput: React.FC<TextInputProps> = ({
 
     filename: 'TextInput.tsx',
     folder: 'forms',
+
+    documentation: {
+      usage: `import { TextInput } from './forms/TextInput';
+
+export function App() {
+  const [value, setValue] = useState('');
+  return (
+    <TextInput 
+      label="Email" 
+      placeholder="Enter your email"
+      value={value}
+      onChange={setValue}
+    />
+  );
+}`,
+      props: [
+        {
+          name: 'label',
+          type: 'string',
+          description: 'Label text displayed above the input',
+          required: false,
+        },
+        {
+          name: 'placeholder',
+          type: 'string',
+          description: 'Placeholder text shown when input is empty',
+          required: false,
+        },
+        {
+          name: 'value',
+          type: 'string',
+          description: 'Controlled input value',
+          required: false,
+        },
+        {
+          name: 'onChange',
+          type: '(value: string) => void',
+          description: 'Callback fired when input value changes',
+          required: false,
+        },
+        {
+          name: 'error',
+          type: 'string',
+          description: 'Error message to display below input',
+          required: false,
+        },
+        {
+          name: 'disabled',
+          type: 'boolean',
+          description: 'Disable the input field',
+          default: 'false',
+          required: false,
+        },
+        {
+          name: 'className',
+          type: 'string',
+          description: 'Additional CSS classes',
+          default: '""',
+          required: false,
+        },
+      ],
+    },
 
     createdAt: new Date('2025-01-03'),
     updatedAt: new Date('2025-01-03'),
@@ -584,6 +724,84 @@ export const RangeSlider: React.FC<RangeSliderProps> = ({
     filename: 'RangeSlider.tsx',
     folder: 'forms',
 
+    documentation: {
+      usage: `import { RangeSlider } from './forms/RangeSlider';
+import { useState } from 'react';
+
+export function App() {
+  const [volume, setVolume] = useState(50);
+  
+  return (
+    <RangeSlider 
+      min={0}
+      max={100}
+      value={volume}
+      onChange={setVolume}
+      label="Volume"
+      showValue
+    />
+  );
+}`,
+      props: [
+        {
+          name: 'min',
+          type: 'number',
+          description: 'Minimum value for the slider',
+          default: '0',
+          required: false,
+        },
+        {
+          name: 'max',
+          type: 'number',
+          description: 'Maximum value for the slider',
+          default: '100',
+          required: false,
+        },
+        {
+          name: 'step',
+          type: 'number',
+          description: 'Step increment for the slider',
+          default: '1',
+          required: false,
+        },
+        {
+          name: 'value',
+          type: 'number',
+          description: 'Controlled value of the slider',
+          default: 'undefined',
+          required: false,
+        },
+        {
+          name: 'onChange',
+          type: '(value: number) => void',
+          description: 'Callback fired when the slider value changes',
+          default: 'undefined',
+          required: false,
+        },
+        {
+          name: 'label',
+          type: 'string',
+          description: 'Label text displayed above the slider',
+          default: 'undefined',
+          required: false,
+        },
+        {
+          name: 'showValue',
+          type: 'boolean',
+          description: 'Whether to display the current value next to the label',
+          default: 'true',
+          required: false,
+        },
+        {
+          name: 'className',
+          type: 'string',
+          description: 'Additional CSS classes to apply to the container',
+          default: '""',
+          required: false,
+        },
+      ],
+    },
+
     createdAt: new Date('2025-01-04'),
     updatedAt: new Date('2025-01-04'),
     trending: true,
@@ -687,6 +905,55 @@ export const Checkbox: React.FC<CheckboxProps> = ({
 
     filename: 'Checkbox.tsx',
     folder: 'forms',
+
+    documentation: {
+      usage: `import { Checkbox } from './forms/Checkbox';
+
+export function App() {
+  const [checked, setChecked] = useState(false);
+  return (
+    <Checkbox 
+      label="Accept terms" 
+      checked={checked}
+      onChange={setChecked}
+    />
+  );
+}`,
+      props: [
+        {
+          name: 'label',
+          type: 'string',
+          description: 'Label text displayed next to checkbox',
+          required: false,
+        },
+        {
+          name: 'checked',
+          type: 'boolean',
+          description: 'Controlled checked state',
+          required: false,
+        },
+        {
+          name: 'onChange',
+          type: '(checked: boolean) => void',
+          description: 'Callback fired when checkbox state changes',
+          required: false,
+        },
+        {
+          name: 'disabled',
+          type: 'boolean',
+          description: 'Disable the checkbox',
+          default: 'false',
+          required: false,
+        },
+        {
+          name: 'className',
+          type: 'string',
+          description: 'Additional CSS classes',
+          default: '""',
+          required: false,
+        },
+      ],
+    },
 
     createdAt: new Date('2025-01-07'),
     updatedAt: new Date('2025-01-07'),
@@ -795,6 +1062,73 @@ export const Select: React.FC<SelectProps> = ({
     filename: 'Select.tsx',
     folder: 'forms',
 
+    documentation: {
+      usage: `import { Select } from './forms/Select';
+
+export function App() {
+  const [value, setValue] = useState('');
+  return (
+    <Select 
+      label="Country"
+      options={[
+        { value: 'us', label: 'United States' },
+        { value: 'uk', label: 'United Kingdom' },
+        { value: 'ca', label: 'Canada' }
+      ]}
+      value={value}
+      onChange={setValue}
+    />
+  );
+}`,
+      props: [
+        {
+          name: 'label',
+          type: 'string',
+          description: 'Label text displayed above the select',
+          required: false,
+        },
+        {
+          name: 'options',
+          type: '{ value: string; label: string }[]',
+          description: 'Array of options for the dropdown',
+          required: true,
+        },
+        {
+          name: 'value',
+          type: 'string',
+          description: 'Controlled selected value',
+          required: false,
+        },
+        {
+          name: 'onChange',
+          type: '(value: string) => void',
+          description: 'Callback fired when selection changes',
+          required: false,
+        },
+        {
+          name: 'placeholder',
+          type: 'string',
+          description: 'Placeholder text shown as first option',
+          default: '"Select an option"',
+          required: false,
+        },
+        {
+          name: 'disabled',
+          type: 'boolean',
+          description: 'Disable the select',
+          default: 'false',
+          required: false,
+        },
+        {
+          name: 'className',
+          type: 'string',
+          description: 'Additional CSS classes',
+          default: '""',
+          required: false,
+        },
+      ],
+    },
+
     createdAt: new Date('2025-01-07'),
     updatedAt: new Date('2025-01-07'),
   },
@@ -878,6 +1212,76 @@ export const Textarea: React.FC<TextareaProps> = ({
 
     filename: 'Textarea.tsx',
     folder: 'forms',
+
+    documentation: {
+      usage: `import { Textarea } from './forms/Textarea';
+
+export function App() {
+  const [value, setValue] = useState('');
+  return (
+    <Textarea 
+      label="Message"
+      placeholder="Type your message..."
+      rows={6}
+      value={value}
+      onChange={setValue}
+    />
+  );
+}`,
+      props: [
+        {
+          name: 'label',
+          type: 'string',
+          description: 'Label text displayed above the textarea',
+          required: false,
+        },
+        {
+          name: 'placeholder',
+          type: 'string',
+          description: 'Placeholder text shown when textarea is empty',
+          required: false,
+        },
+        {
+          name: 'value',
+          type: 'string',
+          description: 'Controlled textarea value',
+          required: false,
+        },
+        {
+          name: 'onChange',
+          type: '(value: string) => void',
+          description: 'Callback fired when textarea value changes',
+          required: false,
+        },
+        {
+          name: 'rows',
+          type: 'number',
+          description: 'Number of visible text rows',
+          default: '4',
+          required: false,
+        },
+        {
+          name: 'error',
+          type: 'string',
+          description: 'Error message to display below textarea',
+          required: false,
+        },
+        {
+          name: 'disabled',
+          type: 'boolean',
+          description: 'Disable the textarea',
+          default: 'false',
+          required: false,
+        },
+        {
+          name: 'className',
+          type: 'string',
+          description: 'Additional CSS classes',
+          default: '""',
+          required: false,
+        },
+      ],
+    },
 
     createdAt: new Date('2025-01-07'),
     updatedAt: new Date('2025-01-07'),
@@ -968,6 +1372,19 @@ export const BlogCard: React.FC<BlogCardProps> = ({
     filename: 'BlogCard.tsx',
     folder: 'data-display',
 
+    documentation: {
+      usage: 'Blog post card with optional image, title, description, and metadata. Features hover animation.',
+      props: [
+        { name: 'title', type: 'string', required: true, default: '', description: 'Blog post title' },
+        { name: 'description', type: 'string', required: true, default: '', description: 'Blog post description or excerpt' },
+        { name: 'image', type: 'string', required: false, default: 'undefined', description: 'Featured image URL' },
+        { name: 'author', type: 'string', required: false, default: 'undefined', description: 'Author name' },
+        { name: 'date', type: 'string', required: false, default: 'undefined', description: 'Publication date' },
+        { name: 'onClick', type: '() => void', required: false, default: 'undefined', description: 'Click handler for the card' },
+        { name: 'className', type: 'string', required: false, default: '""', description: 'Additional CSS classes' }
+      ]
+    },
+
     createdAt: new Date('2025-01-05'),
     updatedAt: new Date('2025-01-05'),
   },
@@ -1036,6 +1453,16 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({
 
     filename: 'StatusBadge.tsx',
     folder: 'feedback',
+
+    documentation: {
+      usage: 'Display status indicators with color-coded variants (default, success, error, warning, info). Useful for showing item states, user statuses, or category labels.',
+      props: [
+        { name: 'children', type: 'React.ReactNode', required: true, description: 'The text or content to display inside the badge' },
+        { name: 'variant', type: "'default' | 'success' | 'error' | 'warning' | 'info'", required: false, default: "'default'", description: 'Color variant of the badge' },
+        { name: 'className', type: 'string', required: false, default: '""', description: 'Additional CSS classes for custom styling' }
+      ],
+      notes: 'Uses semantic color coding - green for success, red for error, yellow for warning, blue for info, gray for default.'
+    },
 
     createdAt: new Date('2025-01-06'),
     updatedAt: new Date('2025-01-06'),
@@ -1166,6 +1593,18 @@ export const Alert: React.FC<AlertProps> = ({
     filename: 'Alert.tsx',
     folder: 'feedback',
 
+    documentation: {
+      usage: 'Display important messages and notifications with contextual styling. Supports info, success, warning, and error variants with icons. Optional dismissible functionality.',
+      props: [
+        { name: 'variant', type: "'info' | 'success' | 'warning' | 'error'", required: false, default: "'info'", description: 'Visual style variant determining color scheme and icon' },
+        { name: 'title', type: 'string', required: false, description: 'Optional heading text displayed above the main message' },
+        { name: 'children', type: 'React.ReactNode', required: true, description: 'Main alert message content' },
+        { name: 'onClose', type: '() => void', required: false, description: 'Callback function when close button is clicked. If provided, renders close button' },
+        { name: 'className', type: 'string', required: false, default: '""', description: 'Additional CSS classes for custom styling' }
+      ],
+      notes: 'Each variant includes an appropriate icon (Info, CheckCircle, AlertTriangle, AlertCircle). The close button only appears when onClose prop is provided.'
+    },
+
     createdAt: new Date('2025-01-07'),
     updatedAt: new Date('2025-01-07'),
   },
@@ -1257,6 +1696,19 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({
     filename: 'ProgressBar.tsx',
     folder: 'feedback',
 
+    documentation: {
+      usage: 'Visual indicator for task completion or loading progress. Displays a filled bar representing percentage complete with optional label and percentage text.',
+      props: [
+        { name: 'value', type: 'number', required: true, description: 'Current progress value' },
+        { name: 'max', type: 'number', required: false, default: '"100"', description: 'Maximum value for calculating percentage' },
+        { name: 'label', type: 'string', required: false, description: 'Optional label text displayed above the progress bar' },
+        { name: 'showPercentage', type: 'boolean', required: false, default: '"false"', description: 'Whether to display the percentage value' },
+        { name: 'variant', type: "'default' | 'success' | 'warning' | 'error'", required: false, default: "'default'", description: 'Color variant for the progress bar fill' },
+        { name: 'className', type: 'string', required: false, default: '""', description: 'Additional CSS classes for custom styling' }
+      ],
+      notes: 'Progress percentage is automatically calculated as (value/max)*100 and clamped between 0-100%. Includes smooth transition animation.'
+    },
+
     createdAt: new Date('2025-01-07'),
     updatedAt: new Date('2025-01-07'),
   },
@@ -1332,6 +1784,17 @@ export const Avatar: React.FC<AvatarProps> = ({
 
     filename: 'Avatar.tsx',
     folder: 'data-display',
+
+    documentation: {
+      usage: 'Displays a user avatar with image or fallback to initials. Supports multiple size variants.',
+      props: [
+        { name: 'src', type: 'string', required: false, default: 'undefined', description: 'URL of the avatar image' },
+        { name: 'alt', type: 'string', required: false, default: '"Avatar"', description: 'Alt text for the image' },
+        { name: 'fallback', type: 'string', required: false, default: '"?"', description: 'Text to display when image is not available' },
+        { name: 'size', type: '"sm" | "md" | "lg" | "xl"', required: false, default: '"md"', description: 'Size variant of the avatar' },
+        { name: 'className', type: 'string', required: false, default: '""', description: 'Additional CSS classes' }
+      ]
+    },
 
     createdAt: new Date('2025-01-07'),
     updatedAt: new Date('2025-01-07'),
@@ -1416,6 +1879,16 @@ export const AccordionItem: React.FC<AccordionItemProps> = ({
 
     filename: 'AccordionItem.tsx',
     folder: 'data-display',
+
+    documentation: {
+      usage: 'Collapsible content section with animated chevron indicator. Can be used individually or stacked for FAQ sections.',
+      props: [
+        { name: 'title', type: 'string', required: true, default: '', description: 'Header text displayed in the clickable bar' },
+        { name: 'children', type: 'React.ReactNode', required: true, default: '', description: 'Content revealed when expanded' },
+        { name: 'defaultOpen', type: 'boolean', required: false, default: 'false', description: 'Whether accordion starts in open state' }
+      ],
+      notes: 'Uses lucide-react ChevronDown icon. Icon rotates 180deg when expanded.'
+    },
 
     createdAt: new Date('2025-01-07'),
     updatedAt: new Date('2025-01-07'),
@@ -1520,6 +1993,16 @@ export const Tabs: React.FC<TabsProps> = ({
 
     filename: 'Tabs.tsx',
     folder: 'navigation',
+
+    documentation: {
+      usage: 'Organize content into multiple panels with tab navigation. Each tab switches between different content sections without page reload. Ideal for settings pages, product details, or categorized information.',
+      props: [
+        { name: 'tabs', type: 'Tab[]', required: true, description: 'Array of tab objects, each with id (string), label (string), and content (React.ReactNode)' },
+        { name: 'defaultTab', type: 'string', required: false, description: 'ID of the tab to display initially. Defaults to first tab if not specified' },
+        { name: 'className', type: 'string', required: false, default: '""', description: 'Additional CSS classes for custom styling' }
+      ],
+      notes: 'Active tab is visually distinguished with inverted colors (black background, white text). Tab state is managed internally with useState hook.'
+    },
 
     createdAt: new Date('2025-01-07'),
     updatedAt: new Date('2025-01-07'),
@@ -1650,6 +2133,18 @@ export const Toast: React.FC<ToastProps> = ({
 
     filename: 'Toast.tsx',
     folder: 'feedback',
+
+    documentation: {
+      usage: 'Display temporary notification messages that auto-dismiss after a duration. Positioned at screen corners with type-specific icons. Perfect for user action feedback like save confirmations or error messages.',
+      props: [
+        { name: 'message', type: 'string', required: true, description: 'The notification message text to display' },
+        { name: 'type', type: "'success' | 'error' | 'info' | 'warning'", required: false, default: "'info'", description: 'Type of notification determining icon displayed' },
+        { name: 'duration', type: 'number', required: false, default: '"3000"', description: 'Duration in milliseconds before auto-dismiss (0 = no auto-dismiss)' },
+        { name: 'onClose', type: '() => void', required: false, description: 'Callback function triggered when toast closes (auto or manual)' },
+        { name: 'position', type: "'top-right' | 'top-left' | 'bottom-right' | 'bottom-left'", required: false, default: "'top-right'", description: 'Corner position for toast display' }
+      ],
+      notes: 'Toast is fixed positioned with z-50 to appear above other content. Auto-dismisses after duration unless duration is 0. Includes manual close button.'
+    },
 
     createdAt: new Date('2025-01-08'),
     updatedAt: new Date('2025-01-08'),
@@ -1787,6 +2282,16 @@ export const Pagination: React.FC<PaginationProps> = ({
 
     filename: 'Pagination.tsx',
     folder: 'navigation',
+
+    documentation: {
+      usage: 'Navigate through paginated content with Previous/Next buttons and numbered page buttons. Intelligently truncates page numbers with ellipsis for large page counts.',
+      props: [
+        { name: 'currentPage', type: 'number', required: true, description: 'The currently active page number (1-indexed)' },
+        { name: 'totalPages', type: 'number', required: true, description: 'Total number of pages available' },
+        { name: 'onPageChange', type: '(page: number) => void', required: true, description: 'Callback function triggered when user clicks a page or navigation button' }
+      ],
+      notes: 'Smart truncation: shows max 5 visible pages with ellipsis. Previous/Next buttons auto-disable at boundaries. Current page is highlighted with inverted colors.'
+    },
 
     createdAt: new Date('2025-01-08'),
     updatedAt: new Date('2025-01-08'),
@@ -1930,6 +2435,16 @@ export const Table: React.FC<TableProps> = ({ columns, data, striped = true }) =
 
     filename: 'Table.tsx',
     folder: 'data-display',
+
+    documentation: {
+      usage: 'Data table with sortable columns, striped rows, and responsive overflow. Supports ascending/descending sort.',
+      props: [
+        { name: 'columns', type: 'TableColumn[]', required: true, default: '', description: 'Array of column definitions' },
+        { name: 'data', type: 'Record<string, any>[]', required: true, default: '', description: 'Array of data rows to display' },
+        { name: 'striped', type: 'boolean', required: false, default: 'false', description: 'Whether to alternate row colors' }
+      ],
+      notes: 'TableColumn structure: { key: string, label: string, sortable?: boolean }. Click column headers to sort. Uses lucide-react arrow icons.'
+    },
 
     createdAt: new Date('2025-01-08'),
     updatedAt: new Date('2025-01-08'),
@@ -2109,6 +2624,57 @@ export const FileUpload: React.FC<FileUploadProps> = ({
     filename: 'FileUpload.tsx',
     folder: 'forms',
 
+    documentation: {
+      usage: `import { FileUpload } from './forms/FileUpload';
+
+export function App() {
+  const handleFileSelect = (files: File[]) => {
+    console.log('Selected files:', files);
+    // Process uploaded files
+  };
+  
+  return (
+    <FileUpload 
+      onFileSelect={handleFileSelect}
+      accept="image/*,.pdf"
+      multiple
+      maxSize={10}
+    />
+  );
+}`,
+      props: [
+        {
+          name: 'onFileSelect',
+          type: '(files: File[]) => void',
+          description: 'Callback function called when files are selected or dropped',
+          default: 'undefined',
+          required: true,
+        },
+        {
+          name: 'accept',
+          type: 'string',
+          description: 'Accepted file types (e.g., "image/*", ".pdf,.doc")',
+          default: 'undefined',
+          required: false,
+        },
+        {
+          name: 'multiple',
+          type: 'boolean',
+          description: 'Allow multiple file selection',
+          default: 'false',
+          required: false,
+        },
+        {
+          name: 'maxSize',
+          type: 'number',
+          description: 'Maximum file size in megabytes (MB)',
+          default: '10',
+          required: false,
+        },
+      ],
+      notes: 'Component includes drag-and-drop functionality and displays selected files with file size information. Files exceeding maxSize are filtered out automatically.',
+    },
+
     createdAt: new Date('2025-01-08'),
     updatedAt: new Date('2025-01-08'),
   },
@@ -2229,6 +2795,16 @@ export const DropdownMenu: React.FC<DropdownMenuProps> = ({
     filename: 'DropdownMenu.tsx',
     folder: 'navigation',
 
+    documentation: {
+      usage: 'Interactive dropdown menu with click-to-open functionality. Includes click-outside detection for automatic closing. Supports custom trigger element and left/right alignment.',
+      props: [
+        { name: 'trigger', type: 'React.ReactNode', required: true, description: 'Element displayed as the dropdown button (text, icon, or custom component)' },
+        { name: 'items', type: 'DropdownMenuItem[]', required: true, description: 'Array of menu items with label (string), value (string), and optional onClick handler' },
+        { name: 'align', type: "'left' | 'right'", required: false, default: "'left'", description: 'Horizontal alignment of dropdown panel relative to trigger button' }
+      ],
+      notes: 'Menu automatically closes when clicking outside or selecting an item. Uses useRef and useEffect for click-outside detection. Chevron icon rotates when menu is open.'
+    },
+
     createdAt: new Date('2025-01-08'),
     updatedAt: new Date('2025-01-08'),
   },
@@ -2289,6 +2865,61 @@ export const DatePicker: React.FC<DatePickerProps> = ({
     filename: 'DatePicker.tsx',
     folder: 'forms',
 
+    documentation: {
+      usage: `import { DatePicker } from './forms/DatePicker';
+import { useState } from 'react';
+
+export function App() {
+  const [selectedDate, setSelectedDate] = useState('2025-01-15');
+  
+  return (
+    <DatePicker 
+      value={selectedDate}
+      onChange={setSelectedDate}
+      min="2025-01-01"
+      max="2025-12-31"
+    />
+  );
+}`,
+      props: [
+        {
+          name: 'value',
+          type: 'string',
+          description: 'Selected date in YYYY-MM-DD format',
+          default: 'undefined',
+          required: false,
+        },
+        {
+          name: 'onChange',
+          type: '(date: string) => void',
+          description: 'Callback fired when the date changes',
+          default: 'undefined',
+          required: true,
+        },
+        {
+          name: 'min',
+          type: 'string',
+          description: 'Minimum selectable date in YYYY-MM-DD format',
+          default: 'undefined',
+          required: false,
+        },
+        {
+          name: 'max',
+          type: 'string',
+          description: 'Maximum selectable date in YYYY-MM-DD format',
+          default: 'undefined',
+          required: false,
+        },
+        {
+          name: 'disabled',
+          type: 'boolean',
+          description: 'Disable the date picker',
+          default: 'false',
+          required: false,
+        },
+      ],
+    },
+
     createdAt: new Date('2025-01-08'),
     updatedAt: new Date('2025-01-08'),
   },
@@ -2341,6 +2972,45 @@ export const TimePicker: React.FC<TimePickerProps> = ({
 
     filename: 'TimePicker.tsx',
     folder: 'forms',
+
+    documentation: {
+      usage: `import { TimePicker } from './forms/TimePicker';
+import { useState } from 'react';
+
+export function App() {
+  const [selectedTime, setSelectedTime] = useState('14:30');
+  
+  return (
+    <TimePicker 
+      value={selectedTime}
+      onChange={setSelectedTime}
+    />
+  );
+}`,
+      props: [
+        {
+          name: 'value',
+          type: 'string',
+          description: 'Selected time in HH:MM format (24-hour)',
+          default: 'undefined',
+          required: false,
+        },
+        {
+          name: 'onChange',
+          type: '(time: string) => void',
+          description: 'Callback fired when the time changes',
+          default: 'undefined',
+          required: true,
+        },
+        {
+          name: 'disabled',
+          type: 'boolean',
+          description: 'Disable the time picker',
+          default: 'false',
+          required: false,
+        },
+      ],
+    },
 
     createdAt: new Date('2025-01-08'),
     updatedAt: new Date('2025-01-08'),
@@ -2509,6 +3179,20 @@ export const FormValidation: React.FC<FormValidationProps> = ({ onSubmit }) => {
     filename: 'FormValidation.tsx',
     folder: 'forms',
 
+    documentation: {
+      usage: `Complete form with validation:
+<FormValidation 
+  onSubmit={(data) => {
+    console.log('Form submitted:', data);
+    // Handle form data: { name, email, age, website }
+  }}
+/>`,
+      props: [
+        { name: 'onSubmit', type: '(data: Record<string, string>) => void', required: true, default: '', description: 'Callback with form data on successful validation' }
+      ],
+      notes: 'Validates: required name/email, email format, positive age numbers, and URL format. Shows inline error messages with red borders.'
+    },
+
     createdAt: new Date('2025-01-08'),
     updatedAt: new Date('2025-01-08'),
   },
@@ -2585,6 +3269,53 @@ export const ToggleSwitch: React.FC<ToggleSwitchProps> = ({
 
     filename: 'ToggleSwitch.tsx',
     folder: 'forms',
+
+    documentation: {
+      usage: `import { ToggleSwitch } from './forms/ToggleSwitch';
+import { useState } from 'react';
+
+export function App() {
+  const [isEnabled, setIsEnabled] = useState(false);
+  
+  return (
+    <ToggleSwitch 
+      checked={isEnabled}
+      onChange={setIsEnabled}
+      label="Enable notifications"
+    />
+  );
+}`,
+      props: [
+        {
+          name: 'checked',
+          type: 'boolean',
+          description: 'Whether the toggle is in the on/checked state',
+          default: 'false',
+          required: false,
+        },
+        {
+          name: 'onChange',
+          type: '(checked: boolean) => void',
+          description: 'Callback fired when the toggle state changes',
+          default: 'undefined',
+          required: true,
+        },
+        {
+          name: 'label',
+          type: 'string',
+          description: 'Label text displayed next to the toggle switch',
+          default: 'undefined',
+          required: false,
+        },
+        {
+          name: 'disabled',
+          type: 'boolean',
+          description: 'Disable the toggle switch and prevent interaction',
+          default: 'false',
+          required: false,
+        },
+      ],
+    },
 
     createdAt: new Date('2025-01-08'),
     updatedAt: new Date('2025-01-08'),
@@ -2672,6 +3403,62 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       },
       previewHeight: 250,
       previewOnClick: true,
+    },
+
+    documentation: {
+      usage: `import { HeroSection } from './marketing/HeroSection';
+
+export function App() {
+  return (
+    <HeroSection
+      title="Build Better Products"
+      subtitle="Create stunning neobrutalist UI components with ease"
+      ctaText="Get Started"
+      onCtaClick={() => console.log('CTA clicked')}
+      secondaryCtaText="Learn More"
+      onSecondaryCtaClick={() => console.log('Secondary CTA')}
+    />
+  );
+}`,
+      props: [
+        {
+          name: 'title',
+          type: 'string',
+          description: 'Main heading text displayed prominently',
+          required: true,
+        },
+        {
+          name: 'subtitle',
+          type: 'string',
+          description: 'Subtitle text shown below the title',
+          required: true,
+        },
+        {
+          name: 'ctaText',
+          type: 'string',
+          description: 'Text for the primary call-to-action button',
+          required: true,
+        },
+        {
+          name: 'onCtaClick',
+          type: '() => void',
+          description: 'Handler for primary CTA button click',
+          required: true,
+        },
+        {
+          name: 'secondaryCtaText',
+          type: 'string',
+          description: 'Text for optional secondary CTA button',
+          required: false,
+        },
+        {
+          name: 'onSecondaryCtaClick',
+          type: '() => void',
+          description: 'Handler for secondary CTA button click',
+          required: false,
+        },
+      ],
+      notes: 'Perfect for landing pages and product showcases. Features responsive design with mobile-optimized layout. Both CTAs include neobrutalist shadow effects and smooth hover transitions.',
     },
 
     filename: 'HeroSection.tsx',
@@ -2774,6 +3561,56 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
       previewOnClick: true,
     },
 
+    documentation: {
+      usage: `import { PricingSection } from './marketing/PricingSection';
+
+export function App() {
+  const tiers = [
+    {
+      name: 'Starter',
+      price: '$9',
+      period: 'month',
+      features: ['5 Projects', 'Basic Support', '1GB Storage'],
+    },
+    {
+      name: 'Pro',
+      price: '$29',
+      period: 'month',
+      features: ['Unlimited Projects', 'Priority Support', '50GB Storage'],
+      highlighted: true,
+    },
+    {
+      name: 'Enterprise',
+      price: '$99',
+      period: 'month',
+      features: ['Custom Solutions', '24/7 Support', 'Unlimited Storage'],
+    },
+  ];
+
+  return (
+    <PricingSection
+      tiers={tiers}
+      onSelectPlan={(tierName) => console.log('Selected:', tierName)}
+    />
+  );
+}`,
+      props: [
+        {
+          name: 'tiers',
+          type: 'PricingTier[]',
+          description: 'Array of pricing tier objects with name, price, period, features, and optional highlighted flag',
+          required: true,
+        },
+        {
+          name: 'onSelectPlan',
+          type: '(tierName: string) => void',
+          description: 'Callback function triggered when a user selects a plan, receives tier name as argument',
+          required: true,
+        },
+      ],
+      notes: 'Displays up to 3 pricing tiers in a responsive grid. Set highlighted: true on a tier to apply inverse colors (black background, white text) for visual emphasis. All features display with checkmark icons.',
+    },
+
     filename: 'PricingSection.tsx',
     folder: 'marketing',
 
@@ -2845,6 +3682,42 @@ export const FeatureGrid: React.FC<FeatureGridProps> = ({ features }) => {
       },
       previewHeight: 250,
       previewOnClick: true,
+    },
+
+    documentation: {
+      usage: `import { FeatureGrid } from './marketing/FeatureGrid';
+import { Zap, Shield, Rocket } from 'lucide-react';
+
+export function App() {
+  const features = [
+    {
+      icon: <Zap className="w-6 h-6" />,
+      title: 'Lightning Fast',
+      description: 'Optimized for performance and speed',
+    },
+    {
+      icon: <Shield className="w-6 h-6" />,
+      title: 'Secure',
+      description: 'Enterprise-grade security built-in',
+    },
+    {
+      icon: <Rocket className="w-6 h-6" />,
+      title: 'Scalable',
+      description: 'Grows with your business needs',
+    },
+  ];
+
+  return <FeatureGrid features={features} />;
+}`,
+      props: [
+        {
+          name: 'features',
+          type: 'Feature[]',
+          description: 'Array of feature objects containing icon (React node), title, and description',
+          required: true,
+        },
+      ],
+      notes: 'Responsive grid layout: 1 column on mobile, 2 on tablet, 3 on desktop. Each card has hover effects with translation and shadow changes. Icons are displayed in black squares at the top of each card.',
     },
 
     filename: 'FeatureGrid.tsx',
@@ -2920,6 +3793,48 @@ export const AnnouncementBanner: React.FC<AnnouncementBannerProps> = ({
       component: AnnouncementBanner,
       defaultProps: { message: 'New version available!', actionText: 'Update' },
       previewHeight: 80,
+    },
+
+    documentation: {
+      usage: `import { AnnouncementBanner } from './marketing/AnnouncementBanner';
+
+export function App() {
+  return (
+    <AnnouncementBanner
+      message="🎉 New feature released! Check it out now"
+      actionText="Learn More"
+      onAction={() => window.location.href = '/features'}
+      onClose={() => console.log('Banner closed')}
+    />
+  );
+}`,
+      props: [
+        {
+          name: 'message',
+          type: 'string',
+          description: 'Announcement message text to display',
+          required: true,
+        },
+        {
+          name: 'actionText',
+          type: 'string',
+          description: 'Text for the optional action button',
+          required: false,
+        },
+        {
+          name: 'onAction',
+          type: '() => void',
+          description: 'Handler called when action button is clicked',
+          required: false,
+        },
+        {
+          name: 'onClose',
+          type: '() => void',
+          description: 'Handler called when close button (X) is clicked',
+          required: false,
+        },
+      ],
+      notes: 'Typically placed at the top of the page. Features black background with white text for high contrast. Action button and close icon are both optional.',
     },
 
     filename: 'AnnouncementBanner.tsx',
@@ -3017,6 +3932,48 @@ export const NewsletterSignup: React.FC<NewsletterSignupProps> = ({
       },
       previewHeight: 250,
       previewOnClick: true,
+    },
+
+    documentation: {
+      usage: `import { NewsletterSignup } from './marketing/NewsletterSignup';
+
+export function App() {
+  const handleSubmit = (email: string) => {
+    console.log('Subscribing:', email);
+    // Add your subscription logic here
+  };
+
+  return (
+    <NewsletterSignup
+      onSubmit={handleSubmit}
+      title="Stay Updated"
+      description="Get weekly tips and updates delivered to your inbox"
+    />
+  );
+}`,
+      props: [
+        {
+          name: 'onSubmit',
+          type: '(email: string) => void',
+          description: 'Callback function triggered on form submission, receives email as argument',
+          required: true,
+        },
+        {
+          name: 'title',
+          type: 'string',
+          description: 'Heading text for the newsletter section',
+          default: 'Subscribe to our newsletter',
+          required: false,
+        },
+        {
+          name: 'description',
+          type: 'string',
+          description: 'Descriptive text shown below the title',
+          default: 'Get the latest updates delivered to your inbox',
+          required: false,
+        },
+      ],
+      notes: 'Includes built-in email validation and form state management. The email input clears automatically after successful submission. Features a mail icon for visual clarity.',
     },
 
     filename: 'NewsletterSignup.tsx',
@@ -3128,6 +4085,19 @@ export const PricingCard: React.FC<PricingCardProps> = ({
 
     filename: 'PricingCard.tsx',
     folder: 'data-display',
+
+    documentation: {
+      usage: 'Pricing plan card with name, price, period, features list and CTA button. Supports highlighted/popular variant.',
+      props: [
+        { name: 'name', type: 'string', required: true, default: '', description: 'Name of the pricing plan' },
+        { name: 'price', type: 'string', required: true, default: '', description: 'Price amount to display' },
+        { name: 'period', type: 'string', required: true, default: '', description: 'Billing period (e.g., "/month")' },
+        { name: 'features', type: 'string[]', required: true, default: '', description: 'Array of feature descriptions' },
+        { name: 'highlighted', type: 'boolean', required: false, default: 'false', description: 'Whether this is the highlighted/popular plan' },
+        { name: 'onSelect', type: '() => void', required: true, default: '', description: 'Callback when CTA button is clicked' }
+      ],
+      notes: 'Uses lucide-react Check icon for feature list. Highlighted variant uses inverted colors.'
+    },
 
     createdAt: new Date('2025-01-08'),
     updatedAt: new Date('2025-01-08'),
@@ -3250,6 +4220,14 @@ export const ComparisonTable: React.FC<ComparisonTableProps> = ({
     filename: 'ComparisonTable.tsx',
     folder: 'data-display',
 
+    documentation: {
+      usage: 'Feature comparison table for pricing plans or products. Displays features in rows with boolean or string values per column.',
+      props: [
+        { name: 'features', type: 'ComparisonFeature[]', required: true, default: '', description: 'Array of features with name and values for each tier (basic, pro, enterprise)' }
+      ],
+      notes: 'ComparisonFeature has structure: { name: string, basic: boolean | string, pro: boolean | string, enterprise: boolean | string }. Boolean values render as Check/X icons.'
+    },
+
     createdAt: new Date('2025-01-08'),
     updatedAt: new Date('2025-01-08'),
   },
@@ -3365,6 +4343,15 @@ export const FileTree: React.FC<FileTreeProps> = ({ data, onSelect }) => {
     filename: 'FileTree.tsx',
     folder: 'data-display',
 
+    documentation: {
+      usage: 'Hierarchical file/folder tree with expand/collapse functionality. Useful for displaying directory structures.',
+      props: [
+        { name: 'data', type: 'FileTreeNode[]', required: true, default: '', description: 'Array of root-level nodes' },
+        { name: 'onSelect', type: '(node: FileTreeNode) => void', required: false, default: 'undefined', description: 'Callback when a node is clicked' }
+      ],
+      notes: 'FileTreeNode structure: { name: string, type: "file" | "folder", children?: FileTreeNode[] }. Folders can be expanded/collapsed.'
+    },
+
     createdAt: new Date('2025-01-08'),
     updatedAt: new Date('2025-01-08'),
   },
@@ -3439,6 +4426,14 @@ export const Timeline: React.FC<TimelineProps> = ({ items }) => {
     filename: 'Timeline.tsx',
     folder: 'data-display',
 
+    documentation: {
+      usage: 'Vertical timeline for displaying chronological events with dates, titles, and descriptions.',
+      props: [
+        { name: 'items', type: 'TimelineItem[]', required: true, default: '', description: 'Array of timeline events' }
+      ],
+      notes: 'TimelineItem structure: { date: string, title: string, description: string }. Displays with connected vertical line and circular markers.'
+    },
+
     createdAt: new Date('2025-01-08'),
     updatedAt: new Date('2025-01-08'),
   },
@@ -3509,6 +4504,16 @@ export const StatsCard: React.FC<StatsCardProps> = ({
     filename: 'StatsCard.tsx',
     folder: 'data-display',
 
+    documentation: {
+      usage: 'Displays a statistic or metric with optional change indicator showing positive/negative trends.',
+      props: [
+        { name: 'label', type: 'string', required: true, default: '', description: 'Label for the statistic' },
+        { name: 'value', type: 'string | number', required: true, default: '', description: 'The statistic value to display' },
+        { name: 'change', type: 'string', required: false, default: 'undefined', description: 'Change indicator text' },
+        { name: 'changeType', type: '"positive" | "negative" | "neutral"', required: false, default: '"neutral"', description: 'Type of change to style appropriately' }
+      ]
+    },
+
     createdAt: new Date('2025-01-08'),
     updatedAt: new Date('2025-01-08'),
   },
@@ -3566,6 +4571,15 @@ export const CardGrid: React.FC<CardGridProps> = ({ children, columns = 3 }) => 
 
     filename: 'CardGrid.tsx',
     folder: 'data-display',
+
+    documentation: {
+      usage: 'Responsive grid container for card components with configurable columns.',
+      props: [
+        { name: 'children', type: 'React.ReactNode', required: true, default: '', description: 'Card components to display in grid' },
+        { name: 'columns', type: '1 | 2 | 3 | 4', required: false, default: '3', description: 'Number of columns in the grid at largest breakpoint' }
+      ],
+      notes: 'Automatically responsive: 1 column on mobile, 2 on tablet, specified columns on desktop.'
+    },
 
     createdAt: new Date('2025-01-08'),
     updatedAt: new Date('2025-01-08'),
@@ -3684,6 +4698,19 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({ src, poster }) => {
     filename: 'VideoPlayer.tsx',
     folder: 'media',
 
+    documentation: {
+      usage: `Basic video player with custom controls:
+<VideoPlayer 
+  src="video.mp4" 
+  poster="thumbnail.jpg" 
+/>`,
+      props: [
+        { name: 'src', type: 'string', required: true, default: '', description: 'Video source URL' },
+        { name: 'poster', type: 'string', required: false, default: '', description: 'Optional thumbnail image displayed before playback' }
+      ],
+      notes: 'Features play/pause toggle, mute control, and fullscreen mode. Video state is managed internally with refs.'
+    },
+
     createdAt: new Date('2025-01-08'),
     updatedAt: new Date('2025-01-08'),
   },
@@ -3798,6 +4825,21 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({ src, title, artist, co
 
     filename: 'AudioPlayer.tsx',
     folder: 'media',
+
+    documentation: {
+      usage: `Basic audio player with track information:
+<AudioPlayer 
+  src="audio.mp3" 
+  title="Song Title" 
+  artist="Artist Name" 
+/>`,
+      props: [
+        { name: 'src', type: 'string', required: true, default: '', description: 'Audio file source URL' },
+        { name: 'title', type: 'string', required: false, default: '', description: 'Optional track title' },
+        { name: 'artist', type: 'string', required: false, default: '', description: 'Optional artist name' }
+      ],
+      notes: 'Includes play/pause control and skip forward/backward 10 seconds functionality. Displays track metadata when provided.'
+    },
 
     createdAt: new Date('2025-01-08'),
     updatedAt: new Date('2025-01-08'),
@@ -3923,6 +4965,25 @@ export const Carousel: React.FC<CarouselProps> = ({
     filename: 'Carousel.tsx',
     folder: 'layout',
 
+    documentation: {
+      usage: `Image slider with auto-play:
+<Carousel 
+  items={[
+    <img src="slide1.jpg" />,
+    <img src="slide2.jpg" />,
+    <img src="slide3.jpg" />
+  ]}
+  autoPlay={true}
+  interval={3000}
+/>`,
+      props: [
+        { name: 'items', type: 'React.ReactNode[]', required: true, default: '', description: 'Array of carousel slides (can be any React elements)' },
+        { name: 'autoPlay', type: 'boolean', required: false, default: 'false', description: 'Enable automatic slide progression' },
+        { name: 'interval', type: 'number', required: false, default: '3000', description: 'Auto-play interval in milliseconds' }
+      ],
+      notes: 'Features smooth transitions, manual navigation buttons, and dot indicators. AutoPlay interval cleans up on unmount.'
+    },
+
     createdAt: new Date('2025-01-08'),
     updatedAt: new Date('2025-01-08'),
   },
@@ -4043,6 +5104,44 @@ export const SignInForm: React.FC<SignInFormProps> = ({
       defaultProps: { onSubmit: (data: any) => alert(JSON.stringify(data)) },
       previewHeight: 250,
       previewOnClick: true,
+    },
+
+    documentation: {
+      usage: `import { SignInForm } from './auth/SignInForm';
+
+export function App() {
+  const handleSignIn = (email: string, password: string) => {
+    console.log('Signing in:', email);
+    // Add authentication logic here
+  };
+
+  const handleForgotPassword = () => {
+    console.log('Forgot password clicked');
+    // Navigate to password reset page
+  };
+
+  return (
+    <SignInForm
+      onSubmit={handleSignIn}
+      onForgotPassword={handleForgotPassword}
+    />
+  );
+}`,
+      props: [
+        {
+          name: 'onSubmit',
+          type: '(email: string, password: string) => void',
+          description: 'Callback function triggered on form submission, receives email and password as arguments',
+          required: true,
+        },
+        {
+          name: 'onForgotPassword',
+          type: '() => void',
+          description: 'Optional handler for forgot password link click',
+          required: false,
+        },
+      ],
+      notes: 'Includes password visibility toggle with eye icon. Form has built-in validation for email and required fields. Displays optional forgot password link when handler is provided. Maximum width is constrained to 28rem.',
     },
 
     filename: 'SignInForm.tsx',
@@ -4194,6 +5293,28 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ onSubmit, onSignIn }) =>
       previewOnClick: true,
     },
 
+    documentation: {
+      usage: `import { SignUpForm } from './auth/SignUpForm';
+
+export function App() {
+  const handleSignUp = (name: string, email: string, password: string) => {
+    console.log('Creating account for:', name, email);
+    // Add registration logic here
+  };
+
+  return <SignUpForm onSubmit={handleSignUp} />;
+}`,
+      props: [
+        {
+          name: 'onSubmit',
+          type: '(name: string, email: string, password: string) => void',
+          description: 'Callback function triggered on successful form submission, receives name, email, and password as arguments',
+          required: true,
+        },
+      ],
+      notes: 'Includes password confirmation validation with automatic matching check. Password visibility toggle applies to both password fields. Minimum password length is 8 characters. Alert shown if passwords do not match. Maximum width is constrained to 28rem.',
+    },
+
     filename: 'SignUpForm.tsx',
     folder: 'auth',
 
@@ -4277,6 +5398,14 @@ export const Breadcrumb: React.FC<BreadcrumbProps> = ({ items }) => {
 
     filename: 'Breadcrumb.tsx',
     folder: 'navigation',
+
+    documentation: {
+      usage: 'Display hierarchical navigation path showing user\'s location within site structure. Helps users understand their current position and navigate back to parent pages.',
+      props: [
+        { name: 'items', type: 'BreadcrumbItem[]', required: true, description: 'Array of breadcrumb items, each with label (string) and optional href (string)' }
+      ],
+      notes: 'Separates items with ChevronRight icons. Final item appears as current page (no hover effect). Items without href render as plain text instead of links. Includes proper aria-label for accessibility.'
+    },
 
     createdAt: new Date('2025-01-08'),
     updatedAt: new Date('2025-01-08'),
@@ -4381,6 +5510,15 @@ export const SidebarNavigation: React.FC<SidebarNavigationProps> = ({ items }) =
 
     filename: 'SidebarNavigation.tsx',
     folder: 'navigation',
+
+    documentation: {
+      usage: 'Vertical navigation menu for app dashboards and multi-page interfaces. Displays icons, labels, and supports active states. Fixed width design ideal for left-side layouts.',
+      props: [
+        { name: 'items', type: 'SidebarItem[]', required: true, description: 'Array of navigation items with icon (ReactNode), label (string), href (string), and optional active (boolean)' },
+        { name: 'onItemClick', type: '(item: SidebarItem) => void', required: false, description: 'Optional callback when item is clicked (prevents default navigation if provided)' }
+      ],
+      notes: 'Fixed width of 256px (w-64). Active items display with inverted colors (black bg, white text). Includes "Navigation" heading at top. Best used with icons from lucide-react.'
+    },
 
     createdAt: new Date('2025-01-08'),
     updatedAt: new Date('2025-01-08'),
@@ -4575,6 +5713,22 @@ export const ConfettiDemo: React.FC = () => {
     filename: 'Confetti.tsx',
     folder: 'feedback',
 
+    documentation: {
+      usage: `Trigger confetti programmatically:
+const confettiRef = useRef<ConfettiRef>(null);
+
+<Confetti 
+  ref={confettiRef}
+  className="absolute inset-0"
+  onMouseEnter={() => confettiRef.current?.fire()}
+/>`,
+      props: [
+        { name: 'className', type: 'string', required: false, default: '', description: 'CSS classes for the canvas container' },
+        { name: 'onMouseEnter', type: '() => void', required: false, default: '', description: 'Callback triggered on mouse enter' }
+      ],
+      notes: 'Exposes a ref with fire() method to trigger confetti. Uses canvas for smooth particle animation with 100 particles in neo-brutalist colors.'
+    },
+
     createdAt: new Date('2025-01-08'),
     updatedAt: new Date('2025-01-08'),
   },
@@ -4671,6 +5825,22 @@ export const Marquee: React.FC<MarqueeProps> = ({
     filename: 'Marquee.tsx',
     folder: 'data-display',
 
+    documentation: {
+      usage: `Scrolling testimonials with pause on hover:
+<Marquee pauseOnHover={true} reverse={false}>
+  <ReviewCard name="John" body="Great product!" />
+  <ReviewCard name="Jane" body="Highly recommend!" />
+  <ReviewCard name="Bob" body="Amazing experience!" />
+</Marquee>`,
+      props: [
+        { name: 'children', type: 'React.ReactNode', required: true, default: '', description: 'Content to scroll (cards, images, etc.)' },
+        { name: 'pauseOnHover', type: 'boolean', required: false, default: 'false', description: 'Pause animation when hovering' },
+        { name: 'reverse', type: 'boolean', required: false, default: 'false', description: 'Reverse scroll direction (right to left)' },
+        { name: 'className', type: 'string', required: false, default: '', description: 'Additional CSS classes' }
+      ],
+      notes: 'Creates seamless infinite scroll by duplicating children. Uses CSS animations with gradient mask for smooth edge fade.'
+    },
+
     createdAt: new Date('2025-01-08'),
     updatedAt: new Date('2025-01-08'),
   },
@@ -4751,6 +5921,28 @@ export const DockIcon: React.FC<DockIconProps> = ({ children }) => {
 
     filename: 'Dock.tsx',
     folder: 'navigation',
+
+    documentation: {
+      usage: `Dock with navigation icons:
+<Dock>
+  <DockIcon>
+    <a href="/home" aria-label="Home">
+      <Home className="h-5 w-5" />
+    </a>
+  </DockIcon>
+  <DockIcon>
+    <a href="/calendar" aria-label="Calendar">
+      <Calendar className="h-5 w-5" />
+    </a>
+  </DockIcon>
+</Dock>`,
+      props: [
+        { name: 'children', type: 'React.ReactNode', required: true, default: '', description: 'DockIcon components containing icons or links' },
+        { name: 'direction', type: "'top' | 'middle' | 'bottom'", required: false, default: '', description: 'Dock position alignment' },
+        { name: 'className', type: 'string', required: false, default: '', description: 'Additional CSS classes' }
+      ],
+      notes: 'Compose with DockIcon wrapper components. Best for 4-8 icons. Supports both navigation and social media links.'
+    },
 
     createdAt: new Date('2025-01-08'),
     updatedAt: new Date('2025-01-08'),
@@ -4911,6 +6103,26 @@ export const PixelImage: React.FC<PixelImageProps> = ({
     filename: 'PixelImage.tsx',
     folder: 'media',
 
+    documentation: {
+      usage: `Image with pixelated reveal animation:
+<PixelImage 
+  src="photo.jpg" 
+  grid="8x8"
+  grayscaleAnimation={true}
+  pixelFadeInDuration={1000}
+/>`,
+      props: [
+        { name: 'src', type: 'string', required: true, default: '', description: 'Image source URL' },
+        { name: 'grid', type: "'6x4' | '8x8' | '8x3' | '4x6' | '3x8'", required: false, default: '6x4', description: 'Predefined grid size for pixelation' },
+        { name: 'customGrid', type: '{ rows: number; cols: number }', required: false, default: '', description: 'Custom grid (1-16 rows/cols). Overrides grid prop.' },
+        { name: 'grayscaleAnimation', type: 'boolean', required: false, default: 'true', description: 'Start in grayscale, then reveal color' },
+        { name: 'pixelFadeInDuration', type: 'number', required: false, default: '1000', description: 'Pixel fade-in duration in milliseconds' },
+        { name: 'maxAnimationDelay', type: 'number', required: false, default: '1200', description: 'Maximum random delay for pixel animation' },
+        { name: 'colorRevealDelay', type: 'number', required: false, default: '1300', description: 'Delay before color reveal in milliseconds' }
+      ],
+      notes: 'Creates a pixelated reveal effect with staggered animations. Each pixel has random delay for organic appearance.'
+    },
+
     createdAt: new Date('2025-01-08'),
     updatedAt: new Date('2025-01-08'),
   },
@@ -4986,6 +6198,18 @@ export const InteractiveHoverButton: React.FC<InteractiveHoverButtonProps> = ({
 
     filename: 'InteractiveHoverButton.tsx',
     folder: 'buttons',
+
+    documentation: {
+      usage: `Animated button with hover effects:
+<InteractiveHoverButton onClick={() => alert('Clicked!')}>
+  Get Started
+</InteractiveHoverButton>`,
+      props: [
+        { name: 'children', type: 'React.ReactNode', required: true, default: '', description: 'Button text content' },
+        { name: 'className', type: 'string', required: false, default: '', description: 'Additional CSS classes' }
+      ],
+      notes: 'On hover: expanding dot fills background, text slides out, and arrow icon appears. Uses CSS transforms for smooth animation.'
+    },
 
     createdAt: new Date('2025-01-08'),
     updatedAt: new Date('2025-01-08'),
