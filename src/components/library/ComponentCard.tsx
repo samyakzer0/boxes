@@ -50,7 +50,11 @@ export const ComponentCard: React.FC<ComponentCardProps> = ({ component }) => {
                     </Link>
                 ) : (
                     <div className="w-full flex items-center justify-center">
-                        <PreviewComponent {...(component.preview.defaultProps || {})} />
+                        {typeof PreviewComponent === 'function' && !component.preview.defaultProps ? (
+                            <PreviewComponent />
+                        ) : (
+                            <PreviewComponent {...(component.preview.defaultProps || {})} />
+                        )}
                     </div>
                 )}
             </div>

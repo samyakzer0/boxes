@@ -69,3 +69,32 @@ code {
     @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
   }
 }
+
+/* Marquee Animations */
+@layer utilities {
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(calc(-100% - 1rem));
+    }
+  }
+
+  @keyframes marquee-reverse {
+    from {
+      transform: translateX(calc(-100% - 1rem));
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+
+  .animate-marquee {
+    animation: marquee var(--duration, 40s) linear infinite;
+  }
+
+  .animate-marquee-reverse {
+    animation: marquee-reverse var(--duration, 40s) linear infinite;
+  }
+}

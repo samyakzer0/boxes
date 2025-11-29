@@ -104,7 +104,11 @@ export const ComponentDetailPage: React.FC = () => {
                                 className="border-4 border-neo-black bg-neo-gray-50 p-12 flex items-center justify-center"
                                 style={{ minHeight: component.preview.previewHeight || 300 }}
                             >
-                                <PreviewComponent {...(component.preview.defaultProps || {})} />
+                                {typeof PreviewComponent === 'function' && !component.preview.defaultProps ? (
+                                    <PreviewComponent />
+                                ) : (
+                                    <PreviewComponent {...(component.preview.defaultProps || {})} />
+                                )}
                             </div>
                         </div>
                     )}

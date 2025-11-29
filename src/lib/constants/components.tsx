@@ -23,7 +23,6 @@ import { Tabs } from '@/public-components/navigation/Tabs';
 import { Toast } from '@/public-components/feedback/Toast';
 import { Pagination } from '@/public-components/navigation/Pagination';
 import { Table } from '@/public-components/data-display/Table';
-import { FileUpload } from '@/public-components/forms/FileUpload';
 import { DropdownMenu } from '@/public-components/navigation/DropdownMenu';
 
 // Phase 11.2
@@ -57,6 +56,13 @@ import { SignInForm } from '@/public-components/auth/SignInForm';
 import { SignUpForm } from '@/public-components/auth/SignUpForm';
 import { Breadcrumb } from '@/public-components/navigation/Breadcrumb';
 import { SidebarNavigation } from '@/public-components/navigation/SidebarNavigation';
+
+// Additional Components
+import { ConfettiDemo } from '@/public-components/feedback/Confetti';
+import { MarqueeDemo } from '@/public-components/data-display/Marquee';
+import { DockDemo } from '@/public-components/navigation/Dock';
+import { PixelImageDemo } from '@/public-components/media/PixelImage';
+import { InteractiveHoverButtonDemo } from '@/public-components/buttons/InteractiveHoverButton';
 
 export const COMPONENTS: ComponentPreview[] = [
   {
@@ -666,8 +672,16 @@ export const Checkbox: React.FC<CheckboxProps> = ({
     dependencies: ['react'],
 
     preview: {
-      component: Checkbox,
-      defaultProps: { label: 'I agree to terms', checked: true },
+      component: () => {
+        const [checked, setChecked] = React.useState(false);
+        return (
+          <Checkbox 
+            label="I agree to terms" 
+            checked={checked} 
+            onChange={(newChecked) => setChecked(newChecked)} 
+          />
+        );
+      },
       previewHeight: 80,
     },
 
@@ -948,7 +962,7 @@ export const BlogCard: React.FC<BlogCardProps> = ({
         author: 'John Doe',
         date: '2025-01-01',
       },
-      previewHeight: 200,
+      previewHeight: 160,
     },
 
     filename: 'BlogCard.tsx',
@@ -2067,8 +2081,28 @@ export const FileUpload: React.FC<FileUploadProps> = ({
     dependencies: ['react', 'lucide-react'],
 
     preview: {
-      component: FileUpload,
-      defaultProps: { onFilesSelected: () => { } },
+      component: () => {
+        return (
+          <div className="w-full space-y-3">
+            <div
+              className="border-3 border-dashed border-neo-gray-400 bg-neo-gray-50 p-12 text-center opacity-60 cursor-not-allowed"
+            >
+              <div className="w-12 h-12 mx-auto mb-4 text-neo-gray-400">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="17 8 12 3 7 8"></polyline>
+                  <line x1="12" y1="3" x2="12" y2="15"></line>
+                </svg>
+              </div>
+              <p className="font-bold mb-2 text-neo-gray-500">Click to upload or drag and drop</p>
+              <p className="text-sm text-neo-gray-500">Any file type (Max 10MB)</p>
+            </div>
+            <div className="p-3 bg-neo-yellow-100 border-3 border-neo-black text-xs font-bold text-center">
+              ⚠️ File upload disabled in preview mode
+            </div>
+          </div>
+        );
+      },
       previewHeight: 300,
     },
 
@@ -2542,8 +2576,10 @@ export const ToggleSwitch: React.FC<ToggleSwitchProps> = ({
     dependencies: ['react'],
 
     preview: {
-      component: ToggleSwitch,
-      defaultProps: { label: 'Enable Notifications', checked: true },
+      component: () => {
+        const [checked, setChecked] = React.useState(true);
+        return <ToggleSwitch label="Enable Notifications" checked={checked} onChange={setChecked} />;
+      },
       previewHeight: 100,
     },
 
@@ -4231,9 +4267,9 @@ export const Breadcrumb: React.FC<BreadcrumbProps> = ({ items }) => {
       component: Breadcrumb,
       defaultProps: {
         items: [
-          { label: 'Products', href: '/products' },
-          { label: 'Electronics', href: '/products/electronics' },
-          { label: 'Laptops', href: '/products/electronics/laptops' },
+          { label: 'Products', href: '#' },
+          { label: 'Electronics', href: '#' },
+          { label: 'Laptops', href: '#' },
         ],
       },
       previewHeight: 100,
@@ -4345,6 +4381,173 @@ export const SidebarNavigation: React.FC<SidebarNavigationProps> = ({ items }) =
 
     filename: 'SidebarNavigation.tsx',
     folder: 'navigation',
+
+    createdAt: new Date('2025-01-08'),
+    updatedAt: new Date('2025-01-08'),
+  },
+
+  {
+    id: 'confetti',
+    title: 'Confetti',
+    description: 'Interactive confetti animation that triggers on hover',
+    category: 'feedback',
+    tags: ['animation', 'confetti', 'celebration', 'interactive', 'canvas'],
+
+    code: `export const Confetti = () => {
+  const confettiRef = useRef(null);
+  
+  return (
+    <Confetti
+      ref={confettiRef}
+      onMouseEnter={() => confettiRef.current?.fire({})}
+    />
+  );
+};`,
+
+    codeRaw: `// See full implementation in Confetti.tsx`,
+
+    dependencies: ['react'],
+
+    preview: {
+      component: ConfettiDemo,
+      previewHeight: 250,
+      previewOnClick: true,
+    },
+
+    filename: 'Confetti.tsx',
+    folder: 'feedback',
+
+    createdAt: new Date('2025-01-08'),
+    updatedAt: new Date('2025-01-08'),
+  },
+
+  {
+    id: 'marquee',
+    title: 'Marquee',
+    description: 'Smooth scrolling marquee for displaying testimonials and content',
+    category: 'data-display',
+    tags: ['marquee', 'scroll', 'animation', 'testimonials', 'reviews'],
+
+    code: `export const Marquee = ({ children, pauseOnHover, reverse }) => (
+  <div className="flex overflow-hidden">
+    <div className="flex animate-marquee">
+      {children}
+    </div>
+  </div>
+);`,
+
+    codeRaw: `// See full implementation in Marquee.tsx`,
+
+    dependencies: ['react'],
+
+    preview: {
+      component: MarqueeDemo,
+      previewHeight: 250,
+      previewOnClick: true,
+    },
+
+    filename: 'Marquee.tsx',
+    folder: 'data-display',
+
+    createdAt: new Date('2025-01-08'),
+    updatedAt: new Date('2025-01-08'),
+  },
+
+  {
+    id: 'dock',
+    title: 'Dock',
+    description: 'MacOS-style dock navigation with icons and tooltips',
+    category: 'navigation',
+    tags: ['dock', 'navigation', 'icons', 'menu', 'social'],
+
+    code: `export const Dock = ({ children }) => (
+  <div className="flex items-center gap-2 border-4 border-neo-black bg-neo-white p-3 shadow-neo">
+    {children}
+  </div>
+);`,
+
+    codeRaw: `// See full implementation in Dock.tsx`,
+
+    dependencies: ['react', 'lucide-react'],
+
+    preview: {
+      component: DockDemo,
+      previewHeight: 250,
+      previewOnClick: true,
+    },
+
+    filename: 'Dock.tsx',
+    folder: 'navigation',
+
+    createdAt: new Date('2025-01-08'),
+    updatedAt: new Date('2025-01-08'),
+  },
+
+  {
+    id: 'pixel-image',
+    title: 'Pixel Image',
+    description: 'Animated pixelated image reveal effect with grayscale transition',
+    category: 'media',
+    tags: ['image', 'animation', 'pixel', 'reveal', 'effect'],
+
+    code: `export const PixelImage = ({ src, grid = "6x4" }) => {
+  const [isVisible, setIsVisible] = useState(false);
+  
+  return (
+    <div className="relative h-72 w-72 border-4 border-neo-black">
+      {/* Pixel pieces render here */}
+    </div>
+  );
+};`,
+
+    codeRaw: `// See full implementation in PixelImage.tsx`,
+
+    dependencies: ['react'],
+
+    preview: {
+      component: PixelImageDemo,
+      previewHeight: 250,
+      previewOnClick: true,
+    },
+
+    filename: 'PixelImage.tsx',
+    folder: 'media',
+
+    createdAt: new Date('2025-01-08'),
+    updatedAt: new Date('2025-01-08'),
+  },
+
+  {
+    id: 'interactive-hover-button',
+    title: 'Interactive Hover Button',
+    description: 'Button with smooth text slide and icon reveal on hover',
+    category: 'buttons',
+    tags: ['button', 'interactive', 'hover', 'animation', 'transition'],
+
+    code: `export const InteractiveHoverButton = ({ children }) => (
+  <button className="group relative overflow-hidden border-3 border-neo-black 
+                     bg-neo-white px-6 py-2 font-bold uppercase shadow-neo">
+    <span className="group-hover:translate-x-12 group-hover:opacity-0">
+      {children}
+    </span>
+    <div className="absolute opacity-0 group-hover:opacity-100">
+      <span>{children}</span>
+      <ArrowRight />
+    </div>
+  </button>
+);`,
+
+    codeRaw: `// See full implementation in InteractiveHoverButton.tsx`,
+
+    dependencies: ['react', 'lucide-react'],
+
+    preview: {
+      component: InteractiveHoverButtonDemo,
+      previewHeight: 120,
+    },
+
+    filename: 'InteractiveHoverButton.tsx',
+    folder: 'buttons',
 
     createdAt: new Date('2025-01-08'),
     updatedAt: new Date('2025-01-08'),

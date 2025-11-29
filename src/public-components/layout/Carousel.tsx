@@ -49,8 +49,8 @@ export const Carousel: React.FC<CarouselProps> = ({
             <button
                 onClick={goToPrevious}
                 className="absolute left-4 top-1/2 -translate-y-1/2 p-3 bg-neo-white
-                           border-3 border-neo-black shadow-neo hover:translate-x-[2px]
-                           hover:translate-y-[2px] hover:shadow-none transition-all"
+                           border-3 border-neo-black shadow-neo 
+                           hover:shadow-neo-sm active:shadow-none transition-shadow"
                 aria-label="Previous"
             >
                 <ChevronLeft className="w-6 h-6" />
@@ -59,8 +59,8 @@ export const Carousel: React.FC<CarouselProps> = ({
             <button
                 onClick={goToNext}
                 className="absolute right-4 top-1/2 -translate-y-1/2 p-3 bg-neo-white
-                           border-3 border-neo-black shadow-neo hover:translate-x-[2px]
-                           hover:translate-y-[2px] hover:shadow-none transition-all"
+                           border-3 border-neo-black shadow-neo 
+                           hover:shadow-neo-sm active:shadow-none transition-shadow"
                 aria-label="Next"
             >
                 <ChevronRight className="w-6 h-6" />
